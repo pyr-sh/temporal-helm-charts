@@ -16,7 +16,7 @@ jobs:
         run: |
           export VERSION="${{ github.event.release.tag_name }}"
           echo "$VERSION" > version
-          sed -i "s/^version:.*$/version: ${VERSION:1}/" Chart.yaml
+          sed -i "s/^version:.*$/version: ${VERSION}/" Chart.yaml
 
       # Commit the updated 'version' file
       - name: Commit changes
