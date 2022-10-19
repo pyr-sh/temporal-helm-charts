@@ -53,7 +53,9 @@ data:
             connectProtocol: "tcp"
             user: {{ include "temporal.persistence.sql.user" (list $ "default") }}
             password: "{{ `{{ .Env.TEMPORAL_STORE_PASSWORD }}` }}"
-            {{- with (omit $.Values.server.config.persistence.default.sql "driver" "driverName" "host" "port" "connectAddr" "connectProtocol" "database" "databaseName" "user" "password" "existingSecret") }}
+            connectAttributes:
+              {{ $.Values.server.config.persistence.default.sql.connectAttributes | nindent 14 }}
+            {{- with (omit $.Values.server.config.persistence.default.sql "driver" "driverName" "host" "port" "connectAddr" "connectProtocol" "database" "databaseName" "user" "password" "existingSecret" "connectAttributes") }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
           {{- end }}
@@ -76,7 +78,9 @@ data:
             connectProtocol: "tcp"
             user: "{{ include "temporal.persistence.sql.user" (list $ "visibility") }}"
             password: "{{ `{{ .Env.TEMPORAL_VISIBILITY_STORE_PASSWORD }}` }}"
-            {{- with (omit $.Values.server.config.persistence.visibility.sql "driver" "driverName" "host" "port" "connectAddr" "connectProtocol" "database" "databaseName" "user" "password" "existingSecret") }}
+            connectAttributes:
+              {{ $.Values.server.config.persistence.visibility.sql.connectAttributes | nindent 14 }}
+            {{- with (omit $.Values.server.config.persistence.visibility.sql "driver" "driverName" "host" "port" "connectAddr" "connectProtocol" "database" "databaseName" "user" "password" "existingSecret" "connectAttributes") }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
           {{- end }}
